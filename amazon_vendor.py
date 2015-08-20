@@ -13,13 +13,8 @@ def scrape_asins(base_url, vendor):
             data = {'seller': '{}'.format(vendor), 'currentPage': '{}'.format(page + 1), 'useMYI': '1'}
             pages = requests.post(base_url, data=data)
             soup_asin = json.loads(pages.text)
-           # print soup
-
             if not soup_asin:
                 break
-            #     asin_num.extend(soup)
-            # else:
-            #     break
             for asin in soup_asin:
                 try:
                     prices = requests.get('http://www.amazon.com/gp/aag/ajax/asinRenderToJson.html?id={0}&useMYI=0&numCellsInResultsSet=2400&isExplicitSearch=0&merchantID={1}&shovelerName=AAGProductWidget&maxCellsPerPage=1'.format(asin, vendor))
